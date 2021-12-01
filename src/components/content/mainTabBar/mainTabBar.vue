@@ -1,8 +1,4 @@
 <template>
-  <div class="test6">
-    <p>6.tabbar</p>
-    <hr>
-    <router-view></router-view>
     <tabbar>
       <tab-bar-item link="/Home">
         <template #icon>
@@ -18,18 +14,6 @@
 
       <tab-bar-item link="/category">
         <template #icon>
-          <img src="~assets/img/tabbar/cart.svg">
-        </template>
-        <template #active-icon>
-          <img src="~assets/img/tabbar/cart_active.svg">
-        </template>
-        <template #item-text>
-          <div>分类</div>
-        </template>
-      </tab-bar-item>
-
-      <tab-bar-item link="/category">
-        <template #icon>
           <img src="~assets/img/tabbar/category.svg">
         </template>
         <template #active-icon>
@@ -37,6 +21,18 @@
         </template>
         <template #item-text>
           <div>分类</div>
+        </template>
+      </tab-bar-item>
+      
+      <tab-bar-item link="/cart">
+        <template #icon>
+          <img src="~assets/img/tabbar/cart.svg">
+        </template>
+        <template #active-icon>
+          <img src="~assets/img/tabbar/cart_active.svg">
+        </template>
+        <template #item-text>
+          <div>购物车</div>
         </template>
       </tab-bar-item>
       
@@ -52,7 +48,6 @@
         </template>
       </tab-bar-item>
     </tabbar>
-  </div>
 </template>
 
 <script>
