@@ -28,6 +28,7 @@
     },
     methods: {
       itemClick(index) {
+        console.log(index)
         this.currentIndex = index
         this.$emit('tabClick', index)
       }
@@ -41,7 +42,8 @@
     text-align: center;
     line-height: 40px;
     font-size: 15px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
+    z-index: 9;
     .tab-control-item{
       flex: 1;
       span {
