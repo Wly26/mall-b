@@ -28,7 +28,7 @@
     },
     methods: {
       itemClick(index) {
-        console.log(index)
+        // console.log(index)
         this.currentIndex = index
         this.$emit('tabClick', index)
       }

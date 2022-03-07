@@ -4,8 +4,8 @@
     <home-swiper :banners="banners" class="fixed"></home-swiper>
     <home-recommend :recommends="recommends"></home-recommend>
     <feature-view></feature-view>
-    <tab-control class="tab-control" :titles="titles"></tab-control>
-    <goods-list :goodslist="goodslist"></goods-list>
+    <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
+    <goods-list :goodslist="showGoodsList"></goods-list>
   </div>
 </template>
 
@@ -34,7 +34,14 @@ export default {
         'pop': {page: 1, list: []},
         'new': {page: 1, list: []},
         'sell': {page: 1, list: []}
-      }
+      },
+      currentType:'pop'
+    }
+  },
+  computed: {
+    showGoodsList() {
+      console.log(this.goodslist[this.currentType].list)
+      return this.goodslist[this.currentType].list
     }
   },
   created(){
@@ -50,11 +57,11 @@ export default {
         this.recommends =res.data.data.recommend.list;
       })
     },
-    _getHomedata(type) {
+    _getHomedata(currentType) {
       // 当前页码 + 1
-      const page = this.goodslist[type].page + 1
-      getHomedata(type,page).then(res => {
-        // console.log(res.data.data.list)
+      const page = this.goodslist[currentType].page + 1
+      getHomedata(currentType,page).then(res => {
+        // console.log(res)
         // 把一个数组的数据，放到另一个数据里
         // 1.可以遍历数组
         // for( let n of list){
@@ -62,9 +69,28 @@ export default {
         // }
         // 2.数组解构
         // newlist.push(...n)
-        this.goodslist[type].list.push(...res.data.data.list),
-        this.goodslist[type].page += 1
+        const newList = res.data.data.list
+        this.goodslist[currentType].list.push(...newList),
+        this.goodslist[currentType].page += 1
       })
+    },
+
+    tabClickbtn(index){
+      switch(index){
+        case 0:
+          this.currentType = 'pop'
+          break;
+        case 1:
+          this.currentType = 'new'
+          break;
+        case 2:
+          this.currentType = 'sell'
+          break;
+      }
+      // console.log(index)
+      // console.log(this.currentType)
+      // console.log(this.goodslist['pop'].list)
+      // console.log(this.goodslist[this.currentType].list)
     }
   }
 }

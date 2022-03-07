@@ -1,11 +1,11 @@
 <template>
-  <div class="goods" v-for="(item,index) in goods" :key="index">
+  <div class="goods-item">
     <!-- 这里用嵌套，是可以的 -->
-    <img :src="item.show.img"/>
+    <img :src="goods.show.img"/>
     <div class="goods-info">
-      <p>{{item.title}}</p>
-      <span class="price">{{item.orgPrice}}</span>
-      <span class="collect">{{item.popularStar}}</span>
+      <p>{{goods.title}}</p>
+      <span class="price">{{goods.orgPrice}}</span>
+      <span class="collect">{{goods.popularStar}}</span>
     </div>
 
   </div>
@@ -21,17 +21,17 @@
       }
     },
     mounted: function () {
-      console.log(this.goods);
+      // console.log(this.goods);
     },
     data() {
       return {
       }
     },
     computed:{
-      imgurl(){
-        const a = this.goods.show.img
-        return console.log(a)
-      }
+      // imgurl(){
+      //   const a = this.goods.show.img
+      //   return console.log(a)
+      // }
     },
     methods: {
       // goToDetail(){
@@ -41,13 +41,16 @@
 </script>
 
 <style lang="scss" scoped>
-  .goods {
+.goods-item {
     padding-bottom: 40px;
     position: relative;
+    width: 48%;
     img {
       width: 100%;
+      height: 100%;
+      border-radius: 5px;
     }
-    .goods-info {
+    .goods-info{
       font-size: 12px;
       position: absolute;
       bottom: 5px;
@@ -71,7 +74,7 @@
           content: '';
           position: absolute;
           left: -15px;
-          top: 0;
+          top: -1px;
           width: 14px;
           height: 14px;
           background: url("~assets/img/common/collect.svg") 0 0/14px 14px;

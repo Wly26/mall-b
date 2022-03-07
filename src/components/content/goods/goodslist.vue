@@ -1,6 +1,6 @@
 <template>
   <div class="Goods-list">
-    <goods-list-item v-for="(item, index) in goodslist" :key="index" :goods="item.list">
+    <goods-list-item v-for="(item, index) in goodslist" :key="index" :goods="item">
     </goods-list-item>
   </div>
 </template>
@@ -17,14 +17,23 @@
         type: Object,
         default: []
       }
+    },
+    created(){
+      this.list()
+    },
+    methods:{
+      list(){
+        console.log(this.goodslist)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
   .Goods-list{
     display: flex;
-    flex-direction: column;
-    // width: 50%;
+    flex-wrap: wrap;
+    padding: 5px;
+    justify-content: space-around;
   }
 </style>
