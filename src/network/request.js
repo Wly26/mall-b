@@ -6,16 +6,16 @@ export function request(config) {
         timeout: 5000
     });
     // 配置请求和响应拦截
-    // instance.interceptors.request.use(res => {
-    //     return res
-    // },err => {
-    //     return err
-    // })
-    // instance.interceptors.response.use(res => {
-    //     return res
-    // },err => {
-    //     return err
-    // })
+    instance.interceptors.request.use(res => {
+        return res
+    },err => {
+        return err
+    })
+    instance.interceptors.response.use(res => {
+        return res
+    },err => {
+        return err
+    })
     // 返回实例
     return instance(config)
 }

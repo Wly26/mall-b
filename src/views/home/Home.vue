@@ -4,10 +4,10 @@
     <home-swiper :banners="banners" class="fixed"></home-swiper>
     <home-recommend :recommends="recommends"></home-recommend>
     <feature-view></feature-view>
-    <tab-control class="tab-control" :titles="titles"></tab-control>
+    <tab-control class="tab-control" :titles="titles"></tab-control>    
   </div>
 </template>
- 
+
 <script>
 // 组件直接写名字
 import navbar from 'common/navbar/navbar.vue';
@@ -45,10 +45,10 @@ export default {
         this.banners =res.data.data.banner.list;
         this.recommends =res.data.data.recommend.list;
       })
-    },
+    }
     // _getProductData() {
     //   getProductData().then(res => {
-    //     // console.log(res)
+    //     console.log(res)
     //   })
     // }
   }
