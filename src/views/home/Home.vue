@@ -40,7 +40,6 @@ export default {
   },
   computed: {
     showGoodsList() {
-      console.log(this.goodslist[this.currentType].list)
       return this.goodslist[this.currentType].list
     }
   },
@@ -87,10 +86,6 @@ export default {
           this.currentType = 'sell'
           break;
       }
-      // console.log(index)
-      // console.log(this.currentType)
-      // console.log(this.goodslist['pop'].list)
-      // console.log(this.goodslist[this.currentType].list)
     }
   }
 }

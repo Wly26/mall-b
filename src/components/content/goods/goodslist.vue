@@ -17,15 +17,7 @@
         type: Object,
         default: []
       }
-    },
-    created(){
-      this.list()
-    },
-    methods:{
-      list(){
-        console.log(this.goodslist)
     }
-  }
 }
 </script>
 
