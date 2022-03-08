@@ -1,11 +1,14 @@
 <template>
   <div id="home">
     <navbar class="nav-bar"><template #center>购物街</template></navbar>
-    <home-swiper :banners="banners" class="fixed"></home-swiper>
-    <home-recommend :recommends="recommends"></home-recommend>
-    <feature-view></feature-view>
-    <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
-    <goods-list :goodslist="showGoodsList"></goods-list>
+    <scroll class="content">
+      <home-swiper :banners="banners" class="fixed"></home-swiper>
+      <home-recommend :recommends="recommends"></home-recommend>
+      <feature-view></feature-view>
+      <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
+      <goods-list :goodslist="showGoodsList"></goods-list>
+    </scroll>
+
   </div>
 </template>
 
@@ -21,10 +24,11 @@ import FeatureView from './childComps/FeatureView.vue';
 // 没有default导出的，要有{}
 import { getHomeMultidata, getHomedata} from 'network/home.js';
 import goodsList from '../../components/content/goods/goodslist.vue';
+import scroll from '../../components/common/scroll/scroll.vue'
 
 export default {
   name: 'Home',
-  components: { navbar, HomeSwiper, HomeRecommend, FeatureView, TabControl, goodsList},
+  components: { navbar, HomeSwiper, HomeRecommend, FeatureView, TabControl, goodsList,scroll},
   data(){
     return{
       banners: [],
@@ -93,8 +97,10 @@ export default {
 
 <style lang="scss" scoped>
   #home {
-    height: 100%;
+    // vh是视口高度
+    height: 100vh;
     padding-top: 44px;
+    position: relative;
     .nav-bar {
       background-color: var(--color-tint);
       font-weight: 700;
@@ -104,9 +110,20 @@ export default {
       left: 0px;
       right: 0px;
     }
+    .content{
+      overflow: hidden;
+      position: absolute;
+      top: 44px;
+      bottom: 49px;
+    }
+    // .content{
+    //   height: calc(100% - 93px);
+    //   margin-top: 44px;
+    //   overflow: hidden;
+    // }
     .tab-control{
       position: sticky;
-      top: 44px;
+      top: 60px;
     }
   }
 </style>
