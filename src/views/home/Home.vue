@@ -8,7 +8,9 @@
       <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
       <goods-list :goodslist="showGoodsList"></goods-list>
     </scroll>
-
+    <back-top @backTop="backTop" class="back-top" v-show="showBackTop">
+      <img src="~assets/img/common/top.png" alt="">
+    </back-top>
   </div>
 </template>
 
@@ -16,6 +18,7 @@
 // 组件直接写名字
 import navbar from 'common/navbar/navbar.vue';
 import TabControl from 'content/tabcontrol/TabControl.vue';
+import BackTop from 'content/backTop/BackTop'
 
 import HomeSwiper from './childComps/HomeSwiper.vue';
 import HomeRecommend from './childComps/HomeRecommend.vue';
@@ -28,7 +31,7 @@ import scroll from '../../components/common/scroll/scroll.vue'
 
 export default {
   name: 'Home',
-  components: { navbar, HomeSwiper, HomeRecommend, FeatureView, TabControl, goodsList,scroll},
+  components: { navbar, HomeSwiper, HomeRecommend, FeatureView, TabControl, goodsList,scroll,BackTop},
   data(){
     return{
       banners: [],
@@ -39,7 +42,8 @@ export default {
         'new': {page: 1, list: []},
         'sell': {page: 1, list: []}
       },
-      currentType:'pop'
+      currentType:'pop',
+      showBackTop: true
     }
   },
   computed: {
@@ -76,6 +80,9 @@ export default {
         this.goodslist[currentType].list.push(...newList),
         this.goodslist[currentType].page += 1
       })
+    },
+    backTop(){
+      this.$refs.scroll.scrollTo(0, 0, 300)
     },
 
     tabClickbtn(index){
@@ -124,6 +131,15 @@ export default {
     .tab-control{
       position: sticky;
       top: 60px;
+    }
+    .back-top {
+      position: fixed;
+      right: 10px;
+      bottom: 60px;
+      img {
+        width: 43px;
+        height: 43px;
+      }
     }
   }
 </style>

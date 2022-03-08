@@ -24,6 +24,11 @@ export default {
             // 点击事件保持响应
             click:true
         })
+    },
+    methods: {
+      scrollTo(x, y, time) {
+        this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
+      }
     }
 }
 </script>
