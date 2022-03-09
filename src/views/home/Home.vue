@@ -1,16 +1,15 @@
 <template>
   <div id="home">
     <navbar class="nav-bar"><template #center>购物街</template></navbar>
-    <scroll class="content">
+    <scroll class="content" ref="scroll" :bstype="3" @scroll="scroll" :pull-up-load = "true" @pullingUp='pullingUpbtn'>
       <home-swiper :banners="banners" class="fixed"></home-swiper>
       <home-recommend :recommends="recommends"></home-recommend>
       <feature-view></feature-view>
       <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
       <goods-list :goodslist="showGoodsList"></goods-list>
     </scroll>
-    <back-top @backTop="backTop" class="back-top" v-show="showBackTop">
-      <img src="~assets/img/common/top.png" alt="">
-    </back-top>
+    <!-- vue3语法，在组件上调用原生事件 -->
+    <back-top @click="backclick" v-show="showBackTop"></back-top>
   </div>
 </template>
 
@@ -31,6 +30,8 @@ import scroll from '../../components/common/scroll/scroll.vue'
 
 export default {
   name: 'Home',
+  // vue3语法，在组件上调用原生事件
+  emits: ['backclick'],
   components: { navbar, HomeSwiper, HomeRecommend, FeatureView, TabControl, goodsList,scroll,BackTop},
   data(){
     return{
@@ -57,6 +58,9 @@ export default {
     this._getHomedata('new')
     this._getHomedata('sell')
   },
+  mounted(){
+    // console.log(this.$refs.scroll.bstype)
+  },
   methods:{
     _getHomeMultidata() {
       getHomeMultidata().then(res => {
@@ -81,9 +85,7 @@ export default {
         this.goodslist[currentType].page += 1
       })
     },
-    backTop(){
-      this.$refs.scroll.scrollTo(0, 0, 300)
-    },
+
 
     tabClickbtn(index){
       switch(index){
@@ -97,6 +99,21 @@ export default {
           this.currentType = 'sell'
           break;
       }
+    },
+    backclick(){
+      this.$refs.scroll.scroll.scrollTo(0, 0, 500)
+    },
+    scroll(position){
+      // console.log(position)
+      if(-position.y < 1000){
+        this.showBackTop = false
+      }else{
+        this.showBackTop = true
+      }
+    },
+    pullingUpbtn(){
+      // console.log('123')
+      this._getHomedata(this.currentType)
     }
   }
 }
@@ -123,23 +140,9 @@ export default {
       top: 44px;
       bottom: 49px;
     }
-    // .content{
-    //   height: calc(100% - 93px);
-    //   margin-top: 44px;
-    //   overflow: hidden;
-    // }
     .tab-control{
       position: sticky;
       top: 60px;
-    }
-    .back-top {
-      position: fixed;
-      right: 10px;
-      bottom: 60px;
-      img {
-        width: 43px;
-        height: 43px;
-      }
     }
   }
 </style>
