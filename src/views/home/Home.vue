@@ -1,14 +1,14 @@
 <template>
   <div id="home">
     <navbar class="nav-bar"><template #center>购物街</template></navbar>
-    <scroll class="content" ref="scroll" :bstype="3" @scroll="scroll" :pull-up-load = "true" @pullingUp='pullingUpbtn'>
+    <scroll class="content" ref="scroll" :bstype="3"  @scroll="scrollbtn" :pull-up-load = "true" @pullingUp='pullingUpbtn'>
       <home-swiper :banners="banners" class="fixed"></home-swiper>
       <home-recommend :recommends="recommends"></home-recommend>
       <feature-view></feature-view>
       <tab-control class="tab-control" :titles="titles" @tabClick="tabClickbtn"></tab-control>
       <goods-list :goodslist="showGoodsList"></goods-list>
     </scroll>
-    <!-- vue3语法，在组件上调用原生事件 -->
+    <!-- vue3语法，在组件上调用原生事件，看下方 script -->
     <back-top @click="backclick" v-show="showBackTop"></back-top>
   </div>
 </template>
@@ -25,8 +25,11 @@ import FeatureView from './childComps/FeatureView.vue';
 
 // 没有default导出的，要有{}
 import { getHomeMultidata, getHomedata} from 'network/home.js';
-import goodsList from '../../components/content/goods/goodslist.vue';
-import scroll from '../../components/common/scroll/scroll.vue'
+import goodsList from 'content/goods/goodslist.vue';
+import scroll from 'common/scroll/scroll.vue'
+
+import {debounce} from 'common/debounce/debounce'
+import mybus from "common/mitt/mitt";
 
 export default {
   name: 'Home',
@@ -44,7 +47,7 @@ export default {
         'sell': {page: 1, list: []}
       },
       currentType:'pop',
-      showBackTop: true
+      showBackTop: false
     }
   },
   computed: {
@@ -53,13 +56,20 @@ export default {
     }
   },
   created(){
+    // 1.请求多个数据
     this._getHomeMultidata()
+
+    // 2.请求商品数据
     this._getHomedata('pop')
     this._getHomedata('new')
     this._getHomedata('sell')
+
   },
   mounted(){
-    // console.log(this.$refs.scroll.bstype)
+    // 3.监听item中图片加载完成
+    mybus.on('imgloadbus',data=>{
+      debounce( this.$refs.scroll.refresh, 500)
+    })
   },
   methods:{
     _getHomeMultidata() {
@@ -73,7 +83,7 @@ export default {
       const page = this.goodslist[currentType].page + 1
       getHomedata(currentType,page).then(res => {
         // console.log(res)
-        // 把一个数组的数据，放到另一个数据里
+        // 把一个数组的数据，放到另一个数据里 
         // 1.可以遍历数组
         // for( let n of list){
         //   newlist.push(n)
@@ -83,10 +93,10 @@ export default {
         const newList = res.data.data.list
         this.goodslist[currentType].list.push(...newList),
         this.goodslist[currentType].page += 1
+        // 完成上拉加载后，刷新
+        this.$refs.scroll.finishPullUp()
       })
     },
-
-
     tabClickbtn(index){
       switch(index){
         case 0:
@@ -103,16 +113,16 @@ export default {
     backclick(){
       this.$refs.scroll.scroll.scrollTo(0, 0, 500)
     },
-    scroll(position){
-      // console.log(position)
+    scrollbtn(position){
       if(-position.y < 1000){
         this.showBackTop = false
       }else{
         this.showBackTop = true
       }
     },
+    // 上拉加载更多事件
     pullingUpbtn(){
-      // console.log('123')
+      // 再次调用请求函数
       this._getHomedata(this.currentType)
     }
   }

@@ -14,6 +14,16 @@ export function request(config) {
     instance.interceptors.response.use(res => {
         return res
     },err => {
+        if (err && err.response) {
+            switch (err.response.status) {
+                case 400:
+                    err.message = '请求错误'
+                    break
+                case 401:
+                    err.message = '未授权的访问'
+                    break
+            }
+        }
         return err
     })
     // 返回实例

@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item">
     <!-- 这里用嵌套，是可以的 -->
-    <img :src="goods.show.img"/>
+    <img :src="goods.show.img" @load="imgload"/>
     <div class="goods-info">
       <p>{{goods.title}}</p>
       <span class="price">{{goods.orgPrice}}</span>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import mybus from "../../common/mitt/mitt";
   export default {
     name: "GoodsListItem",
     props: {
@@ -27,15 +28,11 @@
       return {
       }
     },
-    computed:{
-      // imgurl(){
-      //   const a = this.goods.show.img
-      //   return console.log(a)
-      // }
-    },
     methods: {
-      // goToDetail(){
-      // }
+      imgload(){
+        mybus.emit('imgloadbus',"imgloadbus调用成功");
+        // bus.emit("imgloadbus")
+      }
     }
   }
 </script>
