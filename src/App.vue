@@ -1,7 +1,15 @@
 <template>
   <div id="app">
+
+    <!-- vue3语法 -->
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+
     <main-tab-bar></main-tab-bar>
-    <router-view/>
+    
   </div>
 </template>
 
@@ -11,6 +19,7 @@ export default {
   components: { mainTabBar },
 }
 </script>
+
 <style lang="scss">
 @import "assets/css/base.css";
   #app {

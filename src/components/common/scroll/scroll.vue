@@ -25,6 +25,8 @@ export default {
             scroll:{}
         }
     },
+    created(){
+    },
     mounted(){
         // 1.创建scroll对象
         // 这样获取元素，不太好
@@ -38,7 +40,7 @@ export default {
             probeType:this.bstype,
             // 监听上拉事件
             pullUpLoad: this.pullUpLoad
-        })
+        });
 
         // 2.监听滚动的位置
         if(this.bstype === 2 || this.bstype === 3){
@@ -47,7 +49,7 @@ export default {
             // console.log(position)
             this.$emit('scroll', position)
             })
-        }
+        };
 
         // 3.监听scroll到底部
         if(this.pullUpLoad){
@@ -55,16 +57,25 @@ export default {
                 // console.log('监听滚动到底部')
                 this.$emit('pullingUp')
             })
-        }
+        };
     },
     methods: {
-        refresh() {
-            this.scroll && this.scroll.refresh && this.scroll.refresh()
-            // this.scroll && this.scroll.refresh && this.scroll.refresh()
+        // 滚动
+        scrollTo(x, y, time = 300) {
+            this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
         },
+        // 刷新
+        refresh() {
+            // console.log('123')
+            this.scroll && this.scroll.refresh && this.scroll.refresh()
+        },
+        // 上拉加载
         finishPullUp() {
             this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
-		    // this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
+        },
+        getScrollY() {
+            // console.log(this.scroll)
+            return this.scroll ? this.scroll.y : 0
         }
     },
     watch: {
