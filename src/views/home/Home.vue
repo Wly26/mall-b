@@ -64,20 +64,23 @@ export default {
       return this.goodslist[this.currentType].list
     }
   },
-  // 活跃/未选中
-  deactivated(){
-    // console.log('deactivated')
-    // this.saveY = this.$refs.scroll.scroll.y
-    this.saveY = -1000
-    console.log(this.saveY)
-  },
 
   // 活跃/选中
   activated() {
-    console.log(this.saveY)
-    console.log(this.$refs.scroll.scroll.scrollTo)
-    this.$refs.scroll.scroll.scrollTo(0, -1000, 0)
+    // console.log('activated')
+    // console.log(this.saveY)
+    this.$refs.scroll.scrollTo(0, this.saveY, 300)
   },
+
+  // 活跃/未选中
+  deactivated(){
+    // console.log('deactivated')
+    this.saveY = this.$refs.scroll.scroll.y
+    // this.saveY = -1000
+    // console.log(this.saveY)
+  },
+
+
 
   // 销毁
   destroyed() {

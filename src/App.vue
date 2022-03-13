@@ -1,12 +1,19 @@
 <template>
   <div id="app">
 
-    <!-- vue3语法 -->
-    <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
+  <!-- <router-view></router-view> -->
+
+
+  <!-- vue3语法 -->
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
+
+   
+
+
 
     <main-tab-bar></main-tab-bar>
     
