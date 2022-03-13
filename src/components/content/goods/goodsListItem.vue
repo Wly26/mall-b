@@ -34,7 +34,9 @@ import mybus from "../../common/mitt/mitt";
         // bus.emit("imgloadbus")
       },
       itemClick(){
-        console.log('11')
+        // console.log(this.goods.iid)
+        // this.$router.push('/detail' + this.goods.iid)
+        this.$router.push({path:'/detail',query:{ iid:this.goods.iid } })
       }
     }
   }

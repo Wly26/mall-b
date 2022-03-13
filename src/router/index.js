@@ -12,45 +12,30 @@ const routes = [
     redirect: '/Home'
   },
   {
+    // 首页
     path: '/home',
     component: Home,
-    meta: {
-      keepAlive: true // 需要被缓存
-    }
   },
   {
+    // 分类
     path: '/category',
     component: Category,
-    meta: {
-      keepAlive: false // 不需要被缓存
-    }
   },
   {
+    // 购物车
     path: '/cart',
     component: Cart,
-    meta: {
-      keepAlive: false // 不需要被缓存
-    }
   },
   {
+    // 我的
     path: '/profile',
     component: Profile,
-    meta: {
-      keepAlive: false // 不需要被缓存
-    }
   },
   {
+    // 首页-详情页
     path: '/detail',
     component: Detail,
-    meta: {
-      keepAlive: false // 不需要被缓存
-    }
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import('../views/About.vue')
-  // }
 ]
 
 const router = createRouter({
