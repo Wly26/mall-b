@@ -1,5 +1,5 @@
 <template>
-    <navbar>
+    <navbar class="wrap">
         <template #left>
             <img class="back" @click="backClick" src="~assets/img/common/back.svg" alt="">
         </template>
@@ -64,6 +64,8 @@ export default {
         font-size: 14px;
     }
   }
-
+.wrap{
+  background-color: #fff;
+}
   
 </style>
