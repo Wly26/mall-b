@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-
-    <!-- vue3语法 -->
-    <router-view v-slot="{ Component }">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </router-view>
-
-    <main-tab-bar></main-tab-bar>
+    
+  <!-- vue3语法 -->
+  <router-view v-slot="{ Component }">
+    <keep-alive exclude="Detail">
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
+   
+  <main-tab-bar></main-tab-bar>
     
   </div>
 </template>

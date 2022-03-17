@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <!-- 这里用嵌套，是可以的 -->
     <img :src="goods.show.img" @load="imgload"/>
     <div class="goods-info">
@@ -32,6 +32,11 @@ import mybus from "../../common/mitt/mitt";
       imgload(){
         mybus.emit('imgloadbus',"imgloadbus调用成功");
         // bus.emit("imgloadbus")
+      },
+      itemClick(){
+        // console.log(this.goods.iid)
+        // this.$router.push('/detail' + this.goods.iid)
+        this.$router.push({path:'/detail',query:{ iid:this.goods.iid } })
       }
     }
   }

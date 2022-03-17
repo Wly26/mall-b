@@ -12,30 +12,30 @@ const routes = [
     redirect: '/Home'
   },
   {
+    // 首页
     path: '/home',
-    component: Home
+    component: Home,
   },
   {
+    // 分类
     path: '/category',
-    component: Category
+    component: Category,
   },
   {
+    // 购物车
     path: '/cart',
-    component: Cart
+    component: Cart,
   },
   {
+    // 我的
     path: '/profile',
-    component: Profile
+    component: Profile,
   },
   {
+    // 首页-详情页
     path: '/detail',
-    component: Detail
+    component: Detail,
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import('../views/About.vue')
-  // }
 ]
 
 const router = createRouter({
