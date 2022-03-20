@@ -8,7 +8,6 @@
           <i class="arrow-right"></i>
         </div>
       </div>
-    <!-- {{commentInfo}} -->
       <div class="info-user">
         <img :src="commentInfo.user.avatar" alt="">
         <span>{{commentInfo.user.uname}}</span>
@@ -16,7 +15,7 @@
       <div class="info-detail">
         <p>{{commentInfo.content}}</p>
         <div class="info-other">
-          <!-- <span class="date">{{commentInfo.created}}</span> -->
+          <span class="date">{{commentInfocreated}}</span>
           <span>{{commentInfo.style}}</span>
         </div>
         <div class="info-imgs">
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-  // import {formatDate} from "common/utils";
+  import {formatDate} from "common/utils";
   
   export default {
 		name: "DetailCommentInfo",
@@ -40,10 +39,19 @@
         }
       }
     },
+    computed: {
+      // vue3.0版本
+      commentInfocreated(){
+        let commentInfocreated = this.commentInfo.created;
+        let data = new Date(commentInfocreated*1000);
+        return formatDate(data, 'yyyy-MM-dd hh:mm:ss')
+      }
+    }
+    // vue2.0版本
     // filters: {
 		//   showDate: function (value) {
     //     let date = new Date(value*1000);
-    //     return formatDate(date, 'yyyy-MM-dd')
+    //     return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
     //   }
     // }
 	}

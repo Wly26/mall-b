@@ -15,7 +15,7 @@
 </template>
 
 <script>
-
+  import mybus from "common/mitt/mitt";
 	export default {
 		name: "DetailRecommendInfo",
     props: {
@@ -25,8 +25,7 @@
     },
     methods: {
       imgload(){
-        // mybus.emit('imgloadbus',"imgloadbus调用成功");
-        // bus.emit("imgloadbus")
+        mybus.emit('imgloadbus');
       }
     }
 	}

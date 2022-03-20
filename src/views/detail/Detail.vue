@@ -36,6 +36,8 @@ import DetailCommentInfo from './childComps/DetailCommentInfo.vue'
 import DetailRecommendInfo from './childComps/DetailRecommendInfo.vue'
 
 import BackTop from 'content/backTop/BackTop'
+import {debounce} from 'common/debounce/debounce'
+import mybus from "common/mitt/mitt"
 
 export default {
   components: { scroll, DetailNav, DetailSwiper, DetailBaseInfo, DetailShopInfo, DetailGoodsInfo, DetailParamInfo, DetailCommentInfo, DetailRecommendInfo, BackTop},
@@ -62,6 +64,14 @@ export default {
     // 发送商品请求
     this._getDetail(this.iid)
     this._getRecommend()
+  },
+  mounted(){
+    // 调用前，先定义一个常量接收一下。
+    const refresh = debounce(this.$refs.scroll.refresh)
+    // 3.监听item中图片加载完成
+    mybus.on('imgloadbus',data=>{
+      refresh()
+    })
   },
   methods:{
     _getDetail(iid) {
@@ -105,7 +115,11 @@ export default {
         this.showBackTop = false
       }
     }
-  }
+  },
+  // // 销毁
+  // destroyed() {
+  //   console.log('destroyed')
+  // },
 }
 </script>
 

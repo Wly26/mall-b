@@ -74,12 +74,12 @@ export default {
 
   // 活跃/未选中
   deactivated(){
-    // console.log('deactivated')
+    console.log('deactivated')
     this.saveY = this.$refs.scroll.scroll.y
+    // mybus.off('imgloadbus');
     // this.saveY = -1000
     // console.log(this.saveY)
   },
-
 
 
   // 销毁
