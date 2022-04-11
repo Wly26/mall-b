@@ -14,10 +14,9 @@
         <!-- 推荐 -->
         <detail-recommend-info ref="recommend" :recommend-list="recommendList"/>
       </scroll>
-
     <!-- vue3语法，在组件上调用原生事件，看下方 script -->
     <back-top @click="backclick" v-show="showBackTop"></back-top>
-
+    <detail-bottom-bar @addToCart="addToCart"/>
   </div>
 </template>
 
@@ -35,12 +34,13 @@ import DetailParamInfo from './childComps/DetailParamInfo.vue'
 import DetailCommentInfo from './childComps/DetailCommentInfo.vue'
 import DetailRecommendInfo from './childComps/DetailRecommendInfo.vue'
 
+import DetailBottomBar from './childComps/DetailBottomBar'
 import BackTop from 'content/backTop/BackTop'
 import {debounce} from 'common/debounce/debounce'
 import mybus from "common/mitt/mitt"
 
 export default {
-  components: { scroll, DetailNav, DetailSwiper, DetailBaseInfo, DetailShopInfo, DetailGoodsInfo, DetailParamInfo, DetailCommentInfo, DetailRecommendInfo, BackTop},
+  components: { scroll, DetailNav, DetailSwiper, DetailBaseInfo, DetailShopInfo, DetailGoodsInfo, DetailParamInfo, DetailCommentInfo, DetailRecommendInfo, BackTop,DetailBottomBar},
   name: 'Detail',
     // vue3语法，在组件上调用原生事件
   emits: ['backclick'],
@@ -176,6 +176,28 @@ export default {
     titleClick(index){
       // console.log(index)
       this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],100)
+    },
+    addToCart(){
+      // console.log('1111')
+      // 2.将商品信息添加到Store中
+      const product = {}
+      product.iid = this.iid
+      product.imgURL = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.realPrice
+
+      // this.$store.commit('addToCart', product)
+      this.$store.dispatch('addToCart', product)
+
+
+
+      // this.$store.dispatch('addToCart', obj).then(() => {
+        //  this.$toast({message: '加入购物车成功'})
+      // })
+      // this.addCart(obj).then(() => {
+      //   this.$toast({message: '加入购物车成功'})
+      // })
     }
   },
 
