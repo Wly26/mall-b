@@ -3,10 +3,8 @@
     <!-- v-model="isSelectAll" -->
     <CheckButton class="select-all" @checkBtnClick="checkBtnClick"></CheckButton>
     <span>全选</span>
-    <span class="total-price">合计: ¥0</span>
-    <!-- {{totalPrice}} -->
-    <span class="buy-product">去计算(0)</span>
-    <!-- {{cartLength}} -->
+    <!-- <span class="total-price">合计: ¥{{totalPrice}}</span>
+    <span class="buy-product">去计算({{cartLength}})</span> -->
   </div>
 </template>
 
@@ -32,9 +30,9 @@
     //       return preValue + item.count * item.price
     //     }, 0).toFixed(2)
     //   },
-    //   isSelectAll() {
-    //     return this.cartList.find(item => item.checked === false) === undefined;
-    //   }
+    //   // isSelectAll() {
+    //   //   return this.cartList.find(item => item.checked === false) === undefined;
+    //   // }
     // },
     methods: {
       checkBtnClick() {

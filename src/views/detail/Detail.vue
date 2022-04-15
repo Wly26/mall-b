@@ -55,11 +55,12 @@ export default {
       commentInfo: {},
       recommendList: [],
       themeTops: [],
-      currentIndex: 0,
       showBackTop: false,
+      
       // 联动距离
       themeTopYs:[],
-      themeTopf:null
+      themeTopf:null,
+      currentIndex: 0
     }
   },
   created() {
@@ -143,27 +144,30 @@ export default {
       // console.log(position)
     },
     _listenScrollTheme(position) {
-        /**
-         * 判断的方案:
-         *  方案一:
-         *    条件: (i < (length-1) && currentPos >= iPos && currentPos < this.themeTopYs[i+1]) || (i === (length-1) && currentPos >= iPos),
-         *    优点: 不需要引入其他的内容, 通过逻辑解决
-         *    缺点: 判断条件过长, 并且不容易理解
-         *  方案二:
-         *    条件: 给themeTopYs最后添加一个很大的值, 用于和最后一个主题的top进行比较.
-         *    优点: 简洁明了, 便于理解
-         *    缺点: 需要引入一个较大的int数字
-         * 疑惑: 在第一个判断中, 为什么不能直接判断(currentPos >= iPos)即可?
-         * 解答: 比如在某一个currentPos大于第0个时, 就会break, 不会判断后面的i了.
-         */
-        for (let i = 0; i < this.themeTopYs.length; i++) {
-          if((i < this.themeTopYs.length - 1 && position >= this.themeTopYs[i] && position < this.themeTopYs[i+1]) || (i === this.themeTopYs.length - 1 && position >= this.themeTopYs[i])){
-            // console.log(i)
-            this.$refs.nav.currentIndex = i
-          }
+      /**
+       * 判断的方案:
+       *  方案一:
+       *    条件: (i < (length-1) && currentPos >= iPos && currentPos < this.themeTopYs[i+1]) || (i === (length-1) && currentPos >= iPos),
+       *    优点: 不需要引入其他的内容, 通过逻辑解决
+       *    缺点: 判断条件过长, 并且不容易理解
+       *  方案二:
+       *    条件: 给themeTopYs最后添加一个很大的值, 用于和最后一个主题的top进行比较.
+       *    优点: 简洁明了, 便于理解
+       *    缺点: 需要引入一个较大的int数字
+       * 疑惑: 在第一个判断中, 为什么不能直接判断(currentPos >= iPos)即可?
+       * 解答: 比如在某一个currentPos大于第0个时, 就会break, 不会判断后面的i了.
+       */
+      for (let i = 0; i < this.themeTopYs.length; i++) {
+        if((i < this.themeTopYs.length - 1 &&
+            position >= this.themeTopYs[i] &&
+            position < this.themeTopYs[i+1]) ||
+              (i === this.themeTopYs.length - 1 && position >= this.themeTopYs[i])){
+          // console.log(i)
+          this.$refs.nav.currentIndex = i
         }
-
-      // for (let i = 0; i < this.themeTopYs.length; i++) {
+      }
+    },
+          // for (let i = 0; i < this.themeTopYs.length; i++) {
       //   let iPos = this.themeTopYs[i];
       //   if (position >= iPos && position < this.themeTopYs[i+1]) {
       //     if (this.currentIndex !== i) {
@@ -172,14 +176,12 @@ export default {
       //     break;
       //   }
       // }
-    },
     titleClick(index){
       // console.log(index)
       this.$refs.scroll.scrollTo(0,-this.themeTopYs[index],100)
     },
     addToCart(){
-      // console.log('1111')
-      // 2.将商品信息添加到Store中
+      // 将商品信息添加到Store中
       const product = {}
       product.iid = this.iid
       product.imgURL = this.topImages[0]

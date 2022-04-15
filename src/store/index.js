@@ -10,7 +10,8 @@ export default createStore({
       payload.count++
     },
     addToCart(state,payload){
-      payload.checked = false
+      // 在模型里，加入属性：这里为true
+      payload.checked = true
       state.cartList.push(payload)
     }
   },

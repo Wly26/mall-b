@@ -2,7 +2,7 @@
   <div id="shop-item">
     <div class="item-selector">
       <!-- @checkBtnClick="checkedChange"-->
-      <CheckButton v-model="itemInfo.checked"></CheckButton>
+      <CheckButton :isChecked="itemInfo.checked" @click="checkBtnClick"></CheckButton>
     </div>
     <div class="item-img">
       <img :src="itemInfo.imgURL" alt="商品图片">
@@ -23,6 +23,8 @@
 
   export default {
     name: "ShopCartItem",
+    // vue3语法，在组件上调用原生事件
+    emits: ['checkBtnClick'],
     props: {
       itemInfo: Object
     },
@@ -30,6 +32,10 @@
       CheckButton
     },
     methods: {
+      checkBtnClick(){
+        // console.log(this.itemInfo.checked)
+        this.itemInfo.checked = !this.itemInfo.checked;
+      }
       // checkedChange: function () {
       //   this.itemInfo.checked = !this.itemInfo.checked;
       // }
