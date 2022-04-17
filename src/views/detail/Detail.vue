@@ -1,5 +1,6 @@
 <template>
   <div class="detail">
+    <toast :message="message" :isShow="isShow"></toast>
     <detail-nav @titleClick="titleClick" ref="nav"></detail-nav>
       <scroll class="content" ref="scroll" :bstype="3"  @scroll="scrollbtn" :pull-up-load = "true">
         <!-- 商品 -->
@@ -14,9 +15,11 @@
         <!-- 推荐 -->
         <detail-recommend-info ref="recommend" :recommend-list="recommendList"/>
       </scroll>
+      
     <!-- vue3语法，在组件上调用原生事件，看下方 script -->
     <back-top @click="backclick" v-show="showBackTop"></back-top>
     <detail-bottom-bar @addToCart="addToCart"/>
+    
   </div>
 </template>
 
@@ -37,10 +40,12 @@ import DetailRecommendInfo from './childComps/DetailRecommendInfo.vue'
 import DetailBottomBar from './childComps/DetailBottomBar'
 import BackTop from 'content/backTop/BackTop'
 import {debounce} from 'common/debounce/debounce'
+import Toast from 'common/toast/Toast.vue'
+
 import mybus from "common/mitt/mitt"
 
 export default {
-  components: { scroll, DetailNav, DetailSwiper, DetailBaseInfo, DetailShopInfo, DetailGoodsInfo, DetailParamInfo, DetailCommentInfo, DetailRecommendInfo, BackTop,DetailBottomBar},
+  components: { scroll, DetailNav, DetailSwiper, DetailBaseInfo, DetailShopInfo, DetailGoodsInfo, DetailParamInfo, DetailCommentInfo, DetailRecommendInfo, BackTop,DetailBottomBar, Toast},
   name: 'Detail',
     // vue3语法，在组件上调用原生事件
   emits: ['backclick'],
@@ -60,7 +65,11 @@ export default {
       // 联动距离
       themeTopYs:[],
       themeTopf:null,
-      currentIndex: 0
+      currentIndex: 0,
+
+      // 弹框
+      message:'',
+      isShow: false
     }
   },
   created() {
@@ -190,12 +199,21 @@ export default {
       product.price = this.goods.realPrice
 
       // this.$store.commit('addToCart', product)
-      this.$store.dispatch('addToCart', product)
+      // this.$store.dispatch('addToCart', product)
 
+      this.$store.dispatch('addToCart', product).then((res) => {
+        console.log(res)
+        this.isShow = true;
+        this.message = res;
 
+        setTimeout(() => {
+          this.isShow = false;
+          // this.message = "";
+        },1500)
+      })
 
-      // this.$store.dispatch('addToCart', obj).then(() => {
-        //  this.$toast({message: '加入购物车成功'})
+      // this.$store.dispatch('addToCart', product).then(() => {
+      //    this.$toast({message: '加入购物车成功'})
       // })
       // this.addCart(obj).then(() => {
       //   this.$toast({message: '加入购物车成功'})

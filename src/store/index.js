@@ -18,15 +18,21 @@ export default createStore({
   actions: {
     // 这里是加上判断
     addToCart(context, payload){
-      let oldproduct = context.state.cartList.find(item => item.iid === payload.iid)
-      if(oldproduct){
-        // oldproduct.count +=1
-        context.commit('addCounter',oldproduct)
-      }else{
-        payload.count = 1
-        // context.state.cartList.push(payload)
-        context.commit('addToCart',payload)
-      }
+      return new Promise((resolve,reject) => {
+        // 查看之前数组中是否有该商品
+        let oldproduct = context.state.cartList.find(item => item.iid === payload.iid)
+        // 判断oldproduct
+        if(oldproduct){
+          // oldproduct.count +=1
+          context.commit('addCounter',oldproduct)
+          resolve('当前商品，数量加一')
+        }else{
+          payload.count = 1
+          // context.state.cartList.push(payload)
+          context.commit('addToCart',payload)
+          resolve('添加了新的商品')
+        }
+      })
     }
   },
   getters:{
