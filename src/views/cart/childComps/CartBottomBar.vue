@@ -1,54 +1,56 @@
 <template>
   <div class="bottom-menu">
-    <!-- v-model="isSelectAll" -->
-    <CheckButton class="select-all" @checkBtnClick="checkBtnClick"></CheckButton>
+    <CheckButton class="select-all" @click="checkBtnClick" :isChecked="isSelectAll"></CheckButton>
     <span>全选</span>
-    <!-- <span class="total-price">合计: ¥{{totalPrice}}</span>
-    <span class="buy-product">去计算({{cartLength}})</span> -->
+    <span class="total-price">合计: ¥{{totalPrice}}</span>
+    <span class="buy-product">去计算({{cartLength}})</span>
   </div>
 </template>
 
 <script>
   import CheckButton from './CheckButton'
-  // import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
 	export default {
 		name: "BottomBar",
+    // vue3语法，在组件上调用原生事件
+    emits: ['checkBtnClick'],
     components: {
 		  CheckButton
     },
-    // computed: {
-    //   ...mapGetters([
-    //   	'cartList',
-    //     'cartLength'
-    //   ]),
-		//   totalPrice() {
-    //     const cartList = this.cartList;
-    //     return cartList.filter(item => {
-    //       return item.checked
-    //     }).reduce((preValue, item) => {
-    //       return preValue + item.count * item.price
-    //     }, 0).toFixed(2)
-    //   },
-    //   // isSelectAll() {
-    //   //   return this.cartList.find(item => item.checked === false) === undefined;
-    //   // }
-    // },
+    computed: {
+      ...mapGetters([
+      	'cartList',
+        'cartLength'
+      ]),
+		  totalPrice() {
+        const cartList = this.cartList;
+        return cartList.filter(item => {
+          return item.checked
+        }).reduce((preValue, item) => {
+          return preValue + item.count * item.price
+        }, 0).toFixed(2)
+      },
+      isSelectAll() {
+        if(this.cartList.length === 0) return false
+        return this.cartList.find(item => item.checked === false) === undefined;
+      }
+    },
     methods: {
       checkBtnClick() {
-        // // 1.判断是否有未选中的按钮
-        // let isSelectAll = this.$store.getters.cartList.find(item => !item.checked);
+        // 1.判断是否有未选中的按钮
+        let isSelectAll = this.$store.getters.cartList.find(item => !item.checked);
 
-        // // 2.有未选中的内容, 则全部选中
-        // if (isSelectAll) {
-        //   this.$store.state.cartList.forEach(item => {
-        //     item.checked = true;
-        //   });
-        // } else {
-        //   this.$store.state.cartList.forEach(item => {
-        //     item.checked = false;
-        //   });
-        // }
+        // 2.有未选中的内容, 则全部选中
+        if (isSelectAll) {
+          this.$store.state.cartList.forEach(item => {
+            item.checked = true;
+          });
+        } else {
+          this.$store.state.cartList.forEach(item => {
+            item.checked = false;
+          });
+        }
       }
     }
 	}
